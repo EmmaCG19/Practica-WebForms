@@ -13,10 +13,10 @@ namespace Practica_WebForms.DAL
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ContadorEntities : DbContext
+    public partial class ContadorDBEntities : DbContext
     {
-        public ContadorEntities()
-            : base("name=ContadorEntities")
+        public ContadorDBEntities()
+            : base("name=ContadorDBEntities")
         {
         }
     

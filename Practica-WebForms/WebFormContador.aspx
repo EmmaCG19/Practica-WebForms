@@ -11,7 +11,7 @@
         <div>
             <asp:Label runat="server" ID="LblContador" Enabled="false"/>
             <br/>
-            <asp:LinkButton runat="server" ID="BtnIncrementar">Guardar en base de datos e incrementar</asp:LinkButton>
+            <asp:LinkButton runat="server" ID="BtnIncrementar" OnClick="BtnIncrementar_Click">Guardar en base de datos e incrementar</asp:LinkButton>
         </div>
     </form>
 </body>

@@ -11,29 +11,40 @@ namespace Practica_WebForms
     public partial class WebFormContador : System.Web.UI.Page
     {
         //Property
-        private const int CONTADOR_INICIAL = 100000;
-        public static int ContadorInicial { get { return CONTADOR_INICIAL; } }
+        private const int VALOR_INICIAL = 100000;
+
+        private static int _contador = 0;
+        public static int Contador { get { return _contador; } set { _contador = value; } }
 
         //Entity Framework
-        ContadorEntities Contadores = new ContadorEntities();
+        ContadorDBEntities Contadores = new ContadorDBEntities();
 
         protected void Page_Load(object sender, EventArgs e)
         {
 
             if (!this.IsPostBack)
             {
-
-                //Eliminar todos los registros y settear el contador en su valor CONTADOR_INICIAL
-                this.EliminarTodo();
-                LblContador.Text = ContadorInicial.ToString();
-
+                this.Inicializar();
+               
             }
             else
             {
-
+                //Por el momento, no se hace nada
 
 
             }
+        }
+
+        #region Eliminar
+
+        #endregion
+        protected void Inicializar()
+        {
+            //Eliminar todos los registros y settear el contador en su valor CONTADOR_INICIAL
+            this.EliminarTodo();
+            Contador = VALOR_INICIAL;
+            LblContador.Text = Contador.ToString();
+
         }
 
         protected void EliminarTodo()
@@ -56,6 +67,23 @@ namespace Practica_WebForms
 
             }
 
+        }
+
+        protected void Insertar()
+        {
+            Numero numero = new Numero();
+            numero.Valor = Contador;
+
+            Contadores.Numeros.Add(numero);
+            Contadores.SaveChanges();
+                        
+        }
+
+        protected void BtnIncrementar_Click(object sender, EventArgs e)
+        {
+            this.Insertar();
+            LblContador.Text = (++Contador).ToString();
+            
         }
     }
 }
