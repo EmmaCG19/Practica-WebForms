@@ -67,10 +67,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AutoPostBack.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoPostBack.aspx.cs">
+      <DependentUpon>AutoPostBack.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AutoPostBack.aspx.designer.cs">
+      <DependentUpon>AutoPostBack.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Autor.cs" />
+    <Compile Include="DAL\Libro.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
