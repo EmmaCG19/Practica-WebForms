@@ -43,7 +43,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -67,16 +73,67 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DAL\ModelEscritor.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ModelEscritor.Context.cs</LastGenOutput>
+      <DependentUpon>LibreriaDB.edmx</DependentUpon>
+    </Content>
+    <Content Include="DAL\ModelEscritor.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ModelEscritor.cs</LastGenOutput>
+      <DependentUpon>LibreriaDB.edmx</DependentUpon>
+    </Content>
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
+    <Content Include="WebFormLIKE.aspx" />
+    <Content Include="WebFormSort.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\Escritor.cs">
+      <DependentUpon>ModelEscritor.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\LibreriaDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LibreriaDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\ModelEscritor.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelEscritor.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\ModelEscritor.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelEscritor.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebFormLIKE.aspx.cs">
+      <DependentUpon>WebFormLIKE.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebFormLIKE.aspx.designer.cs">
+      <DependentUpon>WebFormLIKE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebFormSort.aspx.cs">
+      <DependentUpon>WebFormSort.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebFormSort.aspx.designer.cs">
+      <DependentUpon>WebFormSort.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EntityDeploy Include="DAL\LibreriaDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>LibreriaDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="DAL\LibreriaDB.edmx.diagram">
+      <DependentUpon>LibreriaDB.edmx</DependentUpon>
+    </Content>
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -88,6 +145,9 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
