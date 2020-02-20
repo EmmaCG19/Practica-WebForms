@@ -43,7 +43,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -67,16 +73,59 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DAL\Cientificos.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Cientificos.Context.cs</LastGenOutput>
+      <DependentUpon>Cientificos.edmx</DependentUpon>
+    </Content>
+    <Content Include="DAL\Cientificos.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Cientificos.edmx</DependentUpon>
+      <LastGenOutput>Cientificos.cs</LastGenOutput>
+    </Content>
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
+    <Content Include="WebFormParcial.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\Cientifico.cs">
+      <DependentUpon>Cientificos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Cientificos.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cientificos.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Cientificos.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cientificos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Cientificos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cientificos.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebFormParcial.aspx.cs">
+      <DependentUpon>WebFormParcial.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebFormParcial.aspx.designer.cs">
+      <DependentUpon>WebFormParcial.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EntityDeploy Include="DAL\Cientificos.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Cientificos.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="DAL\Cientificos.edmx.diagram">
+      <DependentUpon>Cientificos.edmx</DependentUpon>
+    </Content>
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -88,6 +137,9 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
