@@ -4,7 +4,14 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <title>Parcial PII - WebForms</title>
+    <style>
+        .botones {
+            width:auto;
+            display:inline-block;
+        }
+
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -13,20 +20,20 @@
             <asp:LinkButton runat="server" ID="LinkBtnCargar" Text="Cargar Ficha por Id" />
             <asp:LinkButton runat="server" ID="LinkBtnEliminar" Text="Eliminar por Id" />
             <asp:LinkButton runat="server" ID="LinkBtnBuscar" Text="Buscar por apellido" />
-            <asp:LinkButton runat="server" ID="LinkBtnInicializar" Text="Inicializar con (Sadosky, Balseiro)" />
+            <asp:LinkButton runat="server" ID="LinkBtnInicializar" Text="Inicializar con (Sadosky, Balseiro)" OnClick="LinkBtnInicializar_Click" />
             <asp:LinkButton runat="server" ID="LinkBtnRenumerar" Text="Renumerar por Id" />
         </div>
         <div>
             <table>
                 <tr>
                     <td>
-                        <asp:Label runat="server" ID="LblId" /></td>
+                        <asp:Label runat="server" ID="LblId" Text="Id:"/></td>
                     <td>
                         <asp:TextBox runat="server" ID="TxtBoxId" /></td>
                 </tr>
                 <tr>
                     <td>
-                        <asp:Label runat="server" ID="LblApellido" /></td>
+                        <asp:Label runat="server" ID="LblApellido" Text="Apellido"/></td>
                     <td>
                         <asp:TextBox runat="server" ID="TxtBoxApellido" /></td>
                 </tr>
