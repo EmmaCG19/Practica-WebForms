@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -12,27 +13,17 @@ namespace Practica_WebForms
     {
         CientificosDBEntities context = new CientificosDBEntities();
 
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            if (!this.IsPostBack)
-            {
-                this.InicializarConSadoskyBalseiro();
-            }
-        }
+        private static bool _flag = false;
+        public static bool BusquedaPorApellidoOn { get { return _flag; } set { _flag = value; } }
 
-        protected void Page_PreRender(object sender, EventArgs e)
-        {
-            this.ListarCientificos();
-        }
+        /*************************************************************/
 
-        protected void ListarCientificos()
+        protected void ListarCientificos(List<Cientifico> cientificos)
         {
-            GWCientificos.DataSource = context.Cientificos.ToList();
+            GWCientificos.DataSource = cientificos;
             GWCientificos.DataBind();
-
         }
 
-        
         protected void InicializarConSadoskyBalseiro()
         {
             List<Cientifico> cientificos = context.Cientificos.ToList();
@@ -43,16 +34,14 @@ namespace Practica_WebForms
                 this.EliminarPorId(c.Id);
             }
 
-
             //Cargar a Sadosky y Balseiro - Reseed?
-            
-            this.Agregar("Sadosky");
-            this.Agregar("Balseiro");
-            
+            this.Agregar(new Cientifico() { Apellido = "Sadosky" });
+            this.Agregar(new Cientifico() { Apellido = "Balseiro" });
+
+            //Cargar la ficha de Sadosky, osea, el primer cientifico cargado
+            this.CargarFichaPorId(context.Cientificos.First().Id);
 
         }
-
-
 
         protected void EliminarPorId(int id)
         {
@@ -61,18 +50,156 @@ namespace Practica_WebForms
             context.SaveChanges();
         }
 
-
-        private void Agregar(string apellido)
+        protected void CargarFichaPorId(int id)
         {
-            Cientifico c = new Cientifico();
-            c.Apellido = apellido;
-            context.Cientificos.Add(c);
+            Cientifico c = this.BuscarPorId(id);
+
+            if (c != null)
+            {
+                TxtBoxApellido.Text = c.Apellido;
+                TxtBoxId.Text = c.Id.ToString();
+            }
+            else
+                throw new Exception();
+        }
+
+        protected List<Cientifico> BuscarPorApellido(string apellido)
+        {
+            //Encontrar todos los cientificos que posean el mismo apellido. No Contains, sino Equals
+
+            List<Cientifico> mismoApellido = context.Cientificos.Where(c => c.Apellido.Equals(apellido)).ToList();
+            BusquedaPorApellidoOn = true;
+
+            return mismoApellido;
+        }
+
+        /*************************************************************/
+
+        private void Guardar(Cientifico cientifico)
+        {
+            cientifico.Apellido = TxtBoxApellido.Text;
             context.SaveChanges();
+
+        }
+
+        private void Agregar(Cientifico cientifico)
+        {
+            context.Cientificos.Add(cientifico);
+            context.SaveChanges();
+        }
+
+        private Cientifico BuscarPorId(int id)
+        {
+            return context.Cientificos.Find(id);
+
+        }
+
+        private void LimpiarCampos()
+        {
+            TxtBoxApellido.Text = TxtBoxId.Text = String.Empty;
+        }
+
+        /*************************************************************/
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!this.IsPostBack)
+            {
+                this.InicializarConSadoskyBalseiro();
+            }
+            else
+            {
+                LblError.Text = String.Empty;
+            }
+        }
+
+        protected void Page_PreRender(object sender, EventArgs e)
+        {
+            //Si está activado el flag de busqueda por apellido, va a mostrar la lista de coincidentes, sino todos los cientificos
+            if (BusquedaPorApellidoOn)
+            {
+                BusquedaPorApellidoOn = false;
+            }
+            else
+            {
+                this.ListarCientificos(context.Cientificos.ToList());
+            }
         }
 
         protected void LinkBtnInicializar_Click(object sender, EventArgs e)
         {
             this.InicializarConSadoskyBalseiro();
+        }
+
+        protected void LinkBtnCargar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int id = Convert.ToInt32(TxtBoxId.Text);
+                this.CargarFichaPorId(id);
+            }
+            catch (FormatException)
+            {
+                Console.Write("El id no tiene un formato correcto.");
+            }
+            catch (Exception error)
+            {
+                Console.Write(error.Message);
+                //TxtBoxApellido.Text = "No existe el alumno con esa Id";
+
+            }
+        }
+
+        protected void LinkBtnGuardar_Click(object sender, EventArgs e)
+        {
+
+            Cientifico c = new Cientifico();
+
+            //Creo un cientifico a partir de los textbox
+
+            //Si el TxtBoxId no esta vacio
+            if (TxtBoxId.Text.Trim() != "")
+            {
+                c = this.BuscarPorId(Convert.ToInt32(TxtBoxId.Text));
+
+                //Si el cientifico existe, que guarde los cambios
+                if (c != null)
+                {
+                    this.Guardar(c);
+                }
+            }
+            else
+            {
+                c.Apellido = TxtBoxApellido.Text;
+                this.Agregar(c);
+            }
+
+            this.LimpiarCampos();
+        }
+
+        protected void LinkBtnEliminar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.EliminarPorId(Convert.ToInt32(TxtBoxId.Text));
+                this.LimpiarCampos();
+            }
+            catch (Exception)
+            {
+                //Lo mejor seria tener un Label que avise todo tipo de errores, desde problemas de persistencia por inexistencia o formato del input
+
+            }
+
+
+        }
+
+        protected void LinkBtnBuscar_Click(object sender, EventArgs e)
+        {
+            List<Cientifico> cientificosMismoApellido = this.BuscarPorApellido(TxtBoxApellido.Text);
+
+            if (cientificosMismoApellido.Count == 0)
+                LblError.Text = "No hay cientificos coincidentes";
+
+            this.ListarCientificos(cientificosMismoApellido);
         }
     }
 }
