@@ -73,6 +73,40 @@ namespace Practica_WebForms
             return mismoApellido;
         }
 
+        protected void RenumerarPorId(List<Cientifico> cientificos)
+        {
+            //Modificar el Id de los cientificos sin alterar sus apellidos
+
+            //1) Obtener los apellidos:
+            List<string> listaApellidos = cientificos.Select(c => c.Apellido).ToList();
+
+            //2) Eliminar todos los científicos que se encuentran cargados
+            foreach (Cientifico c in cientificos)
+            {
+                this.EliminarPorId(c.Id);
+            }
+
+            //3) Realizar la reinserción de los científicos a la base de datos
+            foreach (string apellido in listaApellidos)
+            {
+                Cientifico c = new Cientifico();
+                c.Apellido = apellido;
+                this.Agregar(c);
+            }
+
+        }
+
+
+        protected void Depurar()
+        {
+            //1) Ordenar cientificos por apellido y por ID en segundo lugar
+
+            List<Cientifico> cientificosOrdenados = context.Cientificos.OrderBy(c => c.Apellido).OrderBy(c => c.Id).ToList();
+
+
+        }
+
+
         /*************************************************************/
 
         private void Guardar(Cientifico cientifico)
@@ -200,6 +234,21 @@ namespace Practica_WebForms
                 LblError.Text = "No hay cientificos coincidentes";
 
             this.ListarCientificos(cientificosMismoApellido);
+        }
+
+        protected void LinkBtnRenumerar_Click(object sender, EventArgs e)
+        {
+            this.RenumerarPorId(context.Cientificos.ToList());
+
+        }
+
+        protected void LinkBtnDepurar_Click(object sender, EventArgs e)
+        {
+            //Eliminar apellidos repetidos y quedarnos con el primero que se presente
+
+            this.Depurar();
+
+
         }
     }
 }

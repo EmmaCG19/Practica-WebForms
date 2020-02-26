@@ -76,6 +76,24 @@ namespace Practica_WebForms {
         protected global::System.Web.UI.WebControls.LinkButton LinkBtnRenumerar;
         
         /// <summary>
+        /// LinkBtnDepurar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LinkBtnDepurar;
+        
+        /// <summary>
+        /// LinkBtnOrdenar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LinkBtnOrdenar;
+        
+        /// <summary>
         /// LblId control.
         /// </summary>
         /// <remarks>

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebFormParcial.aspx.cs" Inherits="Practica_WebForms.WebFormParcial" %>
+﻿ <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebFormParcial.aspx.cs" Inherits="Practica_WebForms.WebFormParcial" %>
 
 <!DOCTYPE html>
 
@@ -25,7 +25,9 @@
             <asp:LinkButton runat="server" ID="LinkBtnEliminar" Text="Eliminar por Id" OnClick="LinkBtnEliminar_Click" />
             <asp:LinkButton runat="server" ID="LinkBtnBuscar" Text="Buscar por apellido" OnClick="LinkBtnBuscar_Click" />
             <asp:LinkButton runat="server" ID="LinkBtnInicializar" Text="Inicializar con (Sadosky, Balseiro)" OnClick="LinkBtnInicializar_Click" />
-            <asp:LinkButton runat="server" ID="LinkBtnRenumerar" Text="Renumerar por Id" />
+            <asp:LinkButton runat="server" ID="LinkBtnRenumerar" Text="Renumerar por Id" OnClick="LinkBtnRenumerar_Click" />
+            <asp:LinkButton runat="server" ID="LinkBtnDepurar" Text="Depurar" OnClick="LinkBtnDepurar_Click" />
+            <asp:LinkButton runat="server" ID="LinkBtnOrdenar" Text="Ordenar" />
         </div>
         <div>
             <table>
