@@ -27,7 +27,7 @@
             <asp:LinkButton runat="server" ID="LinkBtnInicializar" Text="Inicializar con (Sadosky, Balseiro)" OnClick="LinkBtnInicializar_Click" />
             <asp:LinkButton runat="server" ID="LinkBtnRenumerar" Text="Renumerar por Id" OnClick="LinkBtnRenumerar_Click" />
             <asp:LinkButton runat="server" ID="LinkBtnDepurar" Text="Depurar" OnClick="LinkBtnDepurar_Click" />
-            <asp:LinkButton runat="server" ID="LinkBtnOrdenar" Text="Ordenar" />
+            <asp:LinkButton runat="server" ID="LinkBtnOrdenar" Text="Ordenar" OnClick="LinkBtnOrdenar_Click" />
         </div>
         <div>
             <table>

@@ -102,14 +102,14 @@ namespace Practica_WebForms
             //1) Ordenar cientificos por apellido y por ID en segundo lugar
 
             List<Cientifico> listaCientificos = context.Cientificos.ToList();
-            List<Cientifico> cientificosOrdenados = listaCientificos.OrderBy(c => c.Id).OrderBy(c=> c.Apellido).ToList();
+            List<Cientifico> cientificosOrdenados = listaCientificos.OrderBy(c => c.Id).OrderBy(c => c.Apellido).ToList();
             List<Cientifico> cientificosRepetidos = new List<Cientifico>();
 
             //2) Recorrer la lista e ir guardando aquellos apellidos que sean repetidos
 
             //Necesito de un cientifico como caso base para empezar a comparar
             Cientifico cient_base = cientificosOrdenados.First();
-            
+
             foreach (Cientifico cientifico in cientificosOrdenados)
             {
                 if (cientifico.Apellido.Equals(cient_base.Apellido) && cientifico != cient_base)
@@ -125,6 +125,22 @@ namespace Practica_WebForms
             }
         }
 
+        protected void Ordenar()
+        {
+            //Ordenamiento fisico, es decir, se ordena ascendentemente por apellido, pero los Id se mantienen en su lugar
+
+            List<int> listaIds = context.Cientificos.Select(c => c.Id).ToList();
+            List<string> listaApellidos = context.Cientificos.OrderBy(c => c.Apellido).Select(c => c.Apellido).ToList();
+
+            int i = 0;
+            foreach (int id in listaIds)
+            {
+                Cientifico c = this.BuscarPorId(id);
+                c.Apellido = listaApellidos[i++];
+                context.SaveChanges();
+            }
+
+        }
 
         /*************************************************************/
 
@@ -264,9 +280,12 @@ namespace Practica_WebForms
         protected void LinkBtnDepurar_Click(object sender, EventArgs e)
         {
             //Eliminar apellidos repetidos y quedarnos con el primero que se presente
-
             this.Depurar();
+        }
 
+        protected void LinkBtnOrdenar_Click(object sender, EventArgs e)
+        {
+            this.Ordenar();
 
         }
     }
