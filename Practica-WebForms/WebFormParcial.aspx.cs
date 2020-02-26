@@ -101,9 +101,28 @@ namespace Practica_WebForms
         {
             //1) Ordenar cientificos por apellido y por ID en segundo lugar
 
-            List<Cientifico> cientificosOrdenados = context.Cientificos.OrderBy(c => c.Apellido).OrderBy(c => c.Id).ToList();
+            List<Cientifico> listaCientificos = context.Cientificos.ToList();
+            List<Cientifico> cientificosOrdenados = listaCientificos.OrderBy(c => c.Id).OrderBy(c=> c.Apellido).ToList();
+            List<Cientifico> cientificosRepetidos = new List<Cientifico>();
 
+            //2) Recorrer la lista e ir guardando aquellos apellidos que sean repetidos
 
+            //Necesito de un cientifico como caso base para empezar a comparar
+            Cientifico cient_base = cientificosOrdenados.First();
+            
+            foreach (Cientifico cientifico in cientificosOrdenados)
+            {
+                if (cientifico.Apellido.Equals(cient_base.Apellido) && cientifico != cient_base)
+                    cientificosRepetidos.Add(cientifico);
+                else
+                    cient_base = cientifico;
+            }
+
+            //3) Eliminar aquellos que tenga en la lista de repetidos
+            for (int i = 0; i < cientificosRepetidos.Count; i++)
+            {
+                this.EliminarPorId(cientificosRepetidos[i].Id);
+            }
         }
 
 
@@ -138,7 +157,7 @@ namespace Practica_WebForms
         {
             if (!this.IsPostBack)
             {
-                this.InicializarConSadoskyBalseiro();
+                //this.InicializarConSadoskyBalseiro();
             }
             else
             {
