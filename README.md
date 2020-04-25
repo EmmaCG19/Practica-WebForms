@@ -6,4 +6,4 @@ Si desean seguirme en mis redes sociales:
 
 [Twitter](https://twitter.com) 
 
-[Instragram](https://instagram.com) 
+[Instagram](https://instagram.com) 
